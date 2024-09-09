@@ -463,7 +463,7 @@ public class RouteController {
         coursesMapping = departmentMapping.get(deptCode).getCourseSelection();
 
         Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
-        requestedCourse.reassignTime(time);
+        requestedCourse.setTime(time);
         return new ResponseEntity<>("Attributed was updated successfully.", HttpStatus.OK);
       } else {
         return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
@@ -502,7 +502,7 @@ public class RouteController {
         coursesMapping = departmentMapping.get(deptCode).getCourseSelection();
 
         Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
-        requestedCourse.reassignInstructor(teacher);
+        requestedCourse.setInstructor(teacher);
         return new ResponseEntity<>("Attributed was updated successfully.", HttpStatus.OK);
       } else {
         return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
@@ -541,7 +541,7 @@ public class RouteController {
         coursesMapping = departmentMapping.get(deptCode).getCourseSelection();
 
         Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
-        requestedCourse.reassignLocation(location);
+        requestedCourse.setLocation(location);
         return new ResponseEntity<>("Attributed was updated successfully.", HttpStatus.OK);
       } else {
         return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
