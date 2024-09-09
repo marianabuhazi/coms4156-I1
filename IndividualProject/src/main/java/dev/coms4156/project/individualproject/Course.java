@@ -10,6 +10,14 @@ import java.io.Serializable;
  */
 public class Course implements Serializable {
 
+  @Serial
+  private static final long serialVersionUID = 123456L;
+  private final int enrollmentCapacity;
+  private int enrolledStudentCount;
+  private String courseLocation;
+  private String courseTimeSlot;
+  private String instructorName;
+
   /**
    * Constructs a new Course object with the given parameters. Initial count starts at 0.
    *
@@ -23,7 +31,7 @@ public class Course implements Serializable {
     this.instructorName = instructorName;
     this.courseTimeSlot = timeSlot;
     this.enrollmentCapacity = capacity;
-    this.enrolledStudentCount = 500;
+    this.enrolledStudentCount = 0;
   }
 
   /**
@@ -32,8 +40,12 @@ public class Course implements Serializable {
    * @return true if the student is successfully enrolled, false otherwise.
    */
   public boolean enrollStudent() {
-    enrolledStudentCount++;
-    return false;
+    if (!isCourseFull()) {
+      this.enrolledStudentCount++;
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -42,8 +54,12 @@ public class Course implements Serializable {
    * @return true if the student is successfully dropped, false otherwise.
    */
   public boolean dropStudent() {
-    enrolledStudentCount--;
-    return false;
+    if (getEnrolledStudentCount() > 0) {
+      this.enrolledStudentCount--;
+      return true;
+    } else {
+      return false;
+    } 
   }
 
   /**
@@ -52,7 +68,7 @@ public class Course implements Serializable {
    * @return The course location.
    */
   public String getCourseLocation() {
-    return this.instructorName;
+    return this.courseLocation;
   }
 
   /**
@@ -61,7 +77,7 @@ public class Course implements Serializable {
    * @return The instructor name.
    */
   public String getInstructorName() {
-    return this.courseLocation;
+    return this.instructorName;
   }
 
   /**
@@ -71,6 +87,60 @@ public class Course implements Serializable {
    */
   public String getCourseTimeSlot() {
     return this.courseTimeSlot;
+  }
+
+  /**
+   * Gets the enrolled student count for the course.
+   *
+   * @return The enrolled student count.
+   */
+  public int getEnrolledStudentCount() {
+    return this.enrolledStudentCount;
+  }
+
+  /**
+   * Sets the instructor name to a new instructor.
+   *
+   * @param newInstructorName   The new instructor name for the course
+   */
+  public void setInstructor(String newInstructorName) {
+    this.instructorName = newInstructorName;
+  }
+
+  /**
+   * Sets the course location to a new location.
+   *
+   * @param newLocation   The new location for the course
+   */
+  public void setLocation(String newLocation) {
+    this.courseLocation = newLocation;
+  }
+
+  /**
+   * Sets the course time slot to a new time slot.
+   *
+   * @param newTime   The new time slot for the course
+   */
+  public void setTime(String newTime) {
+    this.courseTimeSlot = newTime;
+  }
+
+  /**
+   * Sets the enrolled student count to the value provided.
+   *
+   * @param count   The enrolled student count.
+   */
+  public void setEnrolledStudentCount(int count) {
+    this.enrolledStudentCount = count;
+  }
+
+  /**
+   * Returns true if the course is full.
+   *
+   * @return true if the enrollment capacity is exceeded, false otherwise.
+   */
+  public boolean isCourseFull() {
+    return enrolledStudentCount > enrollmentCapacity;
   }
 
   /**
@@ -84,57 +154,4 @@ public class Course implements Serializable {
         +  "; Location: "  + courseLocation
         +  "; Time: " + courseTimeSlot;
   }
-
-  /**
-   * Reassigns the instructor name to a new instructor.
-   *
-   * @param newInstructorName    The new instructor name for the course
-   */
-  public void reassignInstructor(String newInstructorName) {
-    this.instructorName = newInstructorName;
-  }
-
-  /**
-   * Reassigns the course location to a new location.
-   *
-   * @param newLocation    The new location for the course
-   */
-  public void reassignLocation(String newLocation) {
-    this.courseLocation = newLocation;
-  }
-
-  /**
-   * Reassigns the course time slot to a new time slot.
-   *
-   * @param newTime    The new time slot for the course
-   */
-  public void reassignTime(String newTime) {
-    this.courseTimeSlot = newTime;
-  }
-
-  /**
-   * Sets the enrolled student count to the value provided.
-   *
-   * @param count    The enrolled student count.
-   */
-  public void setEnrolledStudentCount(int count) {
-    this.enrolledStudentCount = count;
-  }
-
-  /**
-   * Returns true if the course is full.
-   *
-   * @return true if the enrollment capacity is exceeded, false otherwise.
-   */
-  public boolean isCourseFull() {
-    return enrollmentCapacity > enrolledStudentCount;
-  }
-
-  @Serial
-  private static final long serialVersionUID = 123456L;
-  private final int enrollmentCapacity;
-  private int enrolledStudentCount;
-  private String courseLocation;
-  private String instructorName;
-  private String courseTimeSlot;
 }
