@@ -14,87 +14,75 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration
 public class CourseUnitTests {
 
+  /** The test course instance used for testing. */
+  public static Course coms1004;
+
   @BeforeEach
   public void setupCourseForTesting() {
-    testCourse = new Course("Griffin Newbold", "417 IAB", "11:40-12:55", 250);
+    coms1004 = new Course("Adam Cannon", "417 IAB", "11:40-12:55", 400);
+    coms1004.setEnrolledStudentCount(249);
   }
 
   @Test
   public void toStringTest() {
-    String expectedResult = "\nInstructor: Griffin Newbold; Location: 417 IAB; Time: 11:40-12:55";
-    assertEquals(expectedResult, testCourse.toString());
+    assertEquals("\nInstructor: Adam Cannon; Location: 417 IAB; Time: 11:40-12:55", 
+        coms1004.toString());
   }
 
   @Test
   public void enrollStudentSuceedsTest() {
-    boolean expectedResult = true;
-    int expectedEnrolledStudentCount = 1;
-    assertEquals(expectedResult, testCourse.enrollStudent());
-    assertEquals(expectedEnrolledStudentCount, testCourse.getEnrolledStudentCount());
+    assertEquals(true, coms1004.enrollStudent());
+    assertEquals(250, coms1004.getEnrolledStudentCount());
   }
 
   @Test
   public void enrollStudentFailsTest() {
-    boolean expectedResult = false;
-    testCourse.setEnrolledStudentCount(250);
-    assertEquals(expectedResult, testCourse.enrollStudent());
+    coms1004.setEnrolledStudentCount(400);
+    assertEquals(false, coms1004.enrollStudent());
   }
 
   @Test
   public void dropStudentSuceedsTest() {
-      boolean expectedResult = true;
-      int expectedEnrolledStudentCount = 0;
-      testCourse.setEnrolledStudentCount(1);
-      assertEquals(expectedResult, testCourse.dropStudent());
-      assertEquals(expectedEnrolledStudentCount, testCourse.getEnrolledStudentCount());
+    assertEquals(true, coms1004.dropStudent());
+    assertEquals(248, coms1004.getEnrolledStudentCount());
   }
 
   @Test
   public void dropStudentFailsTest() {
-      boolean expectedResult = false;
-      testCourse.setEnrolledStudentCount(0);
-      assertEquals(expectedResult, testCourse.dropStudent());
+    coms1004.setEnrolledStudentCount(0);
+    assertEquals(false, coms1004.dropStudent());
   }
 
   @Test
   public void getCourseLocationTest() {
-      String expectedResult = "417 IAB";
-      assertEquals(expectedResult, testCourse.getCourseLocation());
+    assertEquals("417 IAB", coms1004.getCourseLocation());
   }
 
   @Test
   public void getInstructorNameTest() {
-      String expectedResult = "Griffin Newbold";
-      assertEquals(expectedResult, testCourse.getInstructorName());
+    assertEquals("Adam Cannon", coms1004.getInstructorName());
   }
 
   @Test
   public void getCourseTimeSlotTest() {
-      String expectedResult = "11:40-12:55";
-      assertEquals(expectedResult, testCourse.getCourseTimeSlot());
+    assertEquals("11:40-12:55", coms1004.getCourseTimeSlot());
   }
 
   @Test
   public void setInstructor() {
-      String expectedResult = "Marian Abuhazi";
-      testCourse.setInstructor("Marian Abuhazi");
-      assertEquals(expectedResult, testCourse.getInstructorName());
+    coms1004.setInstructor("Brian Borowski");
+    assertEquals("Brian Borowski", coms1004.getInstructorName());
   }
 
   @Test
   public void setLocation() {
-      String expectedResult = "Mudd 833";
-      testCourse.setLocation("Mudd 833");
-      assertEquals(expectedResult, testCourse.getCourseLocation());
+    coms1004.setLocation("301 URIS");
+    assertEquals("301 URIS", coms1004.getCourseLocation());
   }
 
   @Test
   public void setTime() {
-      String expectedResult = "10:10-11:25";
-      testCourse.setTime("10:10-11:25");
-      assertEquals(expectedResult, testCourse.getCourseTimeSlot());
+    coms1004.setTime("4:10-5:25");
+    assertEquals("4:10-5:25", coms1004.getCourseTimeSlot());
   }
-
-  /** The test course instance used for testing. */
-  public static Course testCourse;
 }
