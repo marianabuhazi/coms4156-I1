@@ -24,47 +24,47 @@ public class CourseUnitTests {
   }
 
   @Test
-  public void toStringTest() {
+  public void getToString() {
     assertEquals("\nInstructor: Adam Cannon; Location: 417 IAB; Time: 11:40-12:55", 
         coms1004.toString());
   }
 
   @Test
-  public void enrollStudentSuceedsTest() {
+  public void enrollStudentSuceeds() {
     assertEquals(true, coms1004.enrollStudent());
     assertEquals(250, coms1004.getEnrolledStudentCount());
   }
 
   @Test
-  public void enrollStudentFailsTest() {
+  public void enrollStudentFails() {
     coms1004.setEnrolledStudentCount(400);
     assertEquals(false, coms1004.enrollStudent());
   }
 
   @Test
-  public void dropStudentSuceedsTest() {
+  public void dropStudentSuceeds() {
     assertEquals(true, coms1004.dropStudent());
     assertEquals(248, coms1004.getEnrolledStudentCount());
   }
 
   @Test
-  public void dropStudentFailsTest() {
+  public void dropStudentFails() {
     coms1004.setEnrolledStudentCount(0);
     assertEquals(false, coms1004.dropStudent());
   }
 
   @Test
-  public void getCourseLocationTest() {
+  public void getCourseLocation() {
     assertEquals("417 IAB", coms1004.getCourseLocation());
   }
 
   @Test
-  public void getInstructorNameTest() {
+  public void getInstructorName() {
     assertEquals("Adam Cannon", coms1004.getInstructorName());
   }
 
   @Test
-  public void getCourseTimeSlotTest() {
+  public void getCourseTimeSlot() {
     assertEquals("11:40-12:55", coms1004.getCourseTimeSlot());
   }
 
