@@ -1,6 +1,7 @@
 package dev.coms4156.project.individualproject;
 
 import java.util.HashMap;
+import java.util.Locale;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class RouteController {
+  private final String departmentNotFound = "Department Not Found";
+  private final String courseNotFound = "Course Not Found";
+  private final String attrUpdateSuccessful = "Attribute was updated successfully.";
 
   /**
    * Redirects to the homepage.
@@ -42,10 +46,11 @@ public class RouteController {
       HashMap<String, Department> departmentMapping;
       departmentMapping = IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
 
-      if (!departmentMapping.containsKey(deptCode.toUpperCase())) {
-        return new ResponseEntity<>("Department Not Found", HttpStatus.NOT_FOUND);
+      if (!departmentMapping.containsKey(deptCode.toUpperCase(Locale.US))) {
+        return new ResponseEntity<>(departmentNotFound, HttpStatus.NOT_FOUND);
       } else {
-        return new ResponseEntity<>(departmentMapping.get(deptCode.toUpperCase()).toString(),
+        return new ResponseEntity<>(departmentMapping.get(deptCode.toUpperCase(Locale.US))
+        .toString(),
         HttpStatus.OK);
       }
 
@@ -81,13 +86,13 @@ public class RouteController {
         coursesMapping = departmentMapping.get(deptCode).getCourseSelection();
 
         if (!coursesMapping.containsKey(Integer.toString(courseCode))) {
-          return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
+          return new ResponseEntity<>(courseNotFound, HttpStatus.NOT_FOUND);
         } else {
           return new ResponseEntity<>(coursesMapping.get(Integer.toString(courseCode)).toString(),
           HttpStatus.OK);
         }
       }
-      return new ResponseEntity<>("Department Not Found", HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(departmentNotFound, HttpStatus.NOT_FOUND);
     } catch (Exception e) {
       return handleException(e);
     }
@@ -122,7 +127,7 @@ public class RouteController {
         Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
         return new ResponseEntity<>(requestedCourse.isCourseFull(), HttpStatus.OK);
       } else {
-        return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(courseNotFound, HttpStatus.NOT_FOUND);
       }
     } catch (Exception e) {
       return handleException(e);
@@ -147,9 +152,10 @@ public class RouteController {
       if (doesDepartmentExists) {
         HashMap<String, Department> departmentMapping;
         departmentMapping = IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
-        return new ResponseEntity<>(departmentMapping.get(deptCode).getNumberOfMajors(), HttpStatus.OK);
+        return new ResponseEntity<>(departmentMapping.get(deptCode).getNumberOfMajors(), 
+        HttpStatus.OK);
       }
-      return new ResponseEntity<>("Department Not Found", HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(departmentNotFound, HttpStatus.NOT_FOUND);
     } catch (Exception e) {
       return handleException(e);
     }
@@ -173,9 +179,10 @@ public class RouteController {
       if (doesDepartmentExists) {
         HashMap<String, Department> departmentMapping;
         departmentMapping = IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
-        return new ResponseEntity<>(departmentMapping.get(deptCode).getDepartmentChair(), HttpStatus.OK);
+        return new ResponseEntity<>(departmentMapping.get(deptCode).getDepartmentChair(), 
+        HttpStatus.OK);
       }
-      return new ResponseEntity<>("Department Not Found", HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(departmentNotFound, HttpStatus.NOT_FOUND);
     } catch (Exception e) {
       return handleException(e);
     }
@@ -211,7 +218,7 @@ public class RouteController {
         Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
         return new ResponseEntity<>(requestedCourse.getCourseLocation(), HttpStatus.OK);
       } else {
-        return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(courseNotFound, HttpStatus.NOT_FOUND);
       }
     } catch (Exception e) {
       return handleException(e);
@@ -248,7 +255,7 @@ public class RouteController {
         Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
         return new ResponseEntity<>(requestedCourse.getInstructorName(), HttpStatus.OK);
       } else {
-        return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(courseNotFound, HttpStatus.NOT_FOUND);
       }
 
     } catch (Exception e) {
@@ -287,7 +294,7 @@ public class RouteController {
         return new ResponseEntity<>(requestedCourse.getCourseTimeSlot(),
           HttpStatus.OK);
       } else {
-        return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(courseNotFound, HttpStatus.NOT_FOUND);
       }
     } catch (Exception e) {
       return handleException(e);
@@ -316,7 +323,7 @@ public class RouteController {
         specifiedDept.addPersonToMajor();
         return new ResponseEntity<>("Attribute was updated successfully", HttpStatus.OK);
       }
-      return new ResponseEntity<>("Department Not Found", HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(departmentNotFound, HttpStatus.NOT_FOUND);
     } catch (Exception e) {
       return handleException(e);
     }
@@ -344,7 +351,7 @@ public class RouteController {
         specifiedDept.dropPersonFromMajor();
         return new ResponseEntity<>("Attribute was updated or is at minimum", HttpStatus.OK);
       }
-      return new ResponseEntity<>("Department Not Found", HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(departmentNotFound, HttpStatus.NOT_FOUND);
     } catch (Exception e) {
       return handleException(e);
     }
@@ -384,7 +391,7 @@ public class RouteController {
           return new ResponseEntity<>("Student has not been dropped.", HttpStatus.BAD_REQUEST);
         }
       } else {
-        return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(courseNotFound, HttpStatus.NOT_FOUND);
       }
     } catch (Exception e) {
       return handleException(e);
@@ -421,9 +428,9 @@ public class RouteController {
 
         Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
         requestedCourse.setEnrolledStudentCount(count);
-        return new ResponseEntity<>("Attributed was updated successfully.", HttpStatus.OK);
+        return new ResponseEntity<>(attrUpdateSuccessful, HttpStatus.OK);
       } else {
-        return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(courseNotFound, HttpStatus.NOT_FOUND);
       }
     } catch (Exception e) {
       return handleException(e);
@@ -459,9 +466,9 @@ public class RouteController {
 
         Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
         requestedCourse.setTime(time);
-        return new ResponseEntity<>("Attributed was updated successfully.", HttpStatus.OK);
+        return new ResponseEntity<>(attrUpdateSuccessful, HttpStatus.OK);
       } else {
-        return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(courseNotFound, HttpStatus.NOT_FOUND);
       }
     } catch (Exception e) {
       return handleException(e);
@@ -498,9 +505,9 @@ public class RouteController {
 
         Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
         requestedCourse.setInstructor(teacher);
-        return new ResponseEntity<>("Attributed was updated successfully.", HttpStatus.OK);
+        return new ResponseEntity<>(attrUpdateSuccessful, HttpStatus.OK);
       } else {
-        return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(courseNotFound, HttpStatus.NOT_FOUND);
       }
     } catch (Exception e) {
       return handleException(e);
@@ -537,9 +544,9 @@ public class RouteController {
 
         Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
         requestedCourse.setLocation(location);
-        return new ResponseEntity<>("Attributed was updated successfully.", HttpStatus.OK);
+        return new ResponseEntity<>(attrUpdateSuccessful, HttpStatus.OK);
       } else {
-        return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(courseNotFound, HttpStatus.NOT_FOUND);
       }
     } catch (Exception e) {
       return handleException(e);
@@ -547,7 +554,6 @@ public class RouteController {
   }
 
   private ResponseEntity<?> handleException(Exception e) {
-    System.out.println(e.toString());
     return new ResponseEntity<>("An Error has occurred", HttpStatus.OK);
   }
 }

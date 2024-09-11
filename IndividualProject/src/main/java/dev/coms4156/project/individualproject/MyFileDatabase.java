@@ -23,7 +23,7 @@ public class MyFileDatabase {
   public MyFileDatabase(int flag, String filePath) {
     this.filePath = filePath;
     if (flag == 0) {
-      this.departmentMapping = deSerializeObjectFromFile();
+      this.departmentMapping = deSerializeObjectFromFile(filePath);
     }
   }
 
@@ -41,7 +41,7 @@ public class MyFileDatabase {
    *
    * @return the deserialized department mapping
    */
-  public HashMap<String, Department> deSerializeObjectFromFile() {
+  public static HashMap<String, Department> deSerializeObjectFromFile(String filePath) {
     try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filePath))) {
       Object obj = in.readObject();
       if (obj instanceof HashMap) {
@@ -51,7 +51,7 @@ public class MyFileDatabase {
       }
     } catch (IOException | ClassNotFoundException e) {
       e.printStackTrace();
-      return null;
+      return new HashMap<String, Department>();
     }
   }
 
