@@ -149,6 +149,7 @@ public class Course implements Serializable {
    *
    * @return A string representing the course.
    */
+  @Override
   public String toString() {
     return "\nInstructor: " + instructorName 
         +  "; Location: "  + courseLocation
