@@ -5,14 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 
 /**
  * This class contains all the unit tests for the Department class.
  */
-@SpringBootTest
-@ContextConfiguration
 public class DepartmentUnitTests {
 
   /** The test department and courses instances used for testing. */

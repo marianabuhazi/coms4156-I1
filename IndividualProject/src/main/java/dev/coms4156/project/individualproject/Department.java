@@ -59,7 +59,7 @@ public class Department implements Serializable {
    * Increases the number of majors in the department by one.
    */
   public void addPersonToMajor() {
-    numberOfMajors++;
+    this.numberOfMajors++;
   }
 
   /**
@@ -67,7 +67,7 @@ public class Department implements Serializable {
    */
   public void dropPersonFromMajor() {
     if (this.getNumberOfMajors() > 0) {
-      numberOfMajors--;
+		this.numberOfMajors--;
     }
   }
 
