@@ -1,14 +1,4 @@
 # BUG ANALYSIS
-# Running static bug analyzer
-In the IndividualProject directory run: `mvn pmd:check` after running the setup command.
-
-NOTE: This will return 2 violations! Read below in the RouteController section, as to why I didn't fix them and don't think they should count as violations.
-
-# Running unit tests
-In the IndividualProject directory run: `mvn clean test` after running the setup command.
-
-# Checking the code coverage with JaCoCo
-In the IndividualProject directory run: `mvn jacoco:report` after running the setup command and running unit tests. **The branch coverage is 73%.**
 
 ## Course
 **Improper initialization**: (line 34) the enrolledStudentCount was originally set to 500, when the Javadoc says that it must be initially at 0. I discovered this myself and fixed.
