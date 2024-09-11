@@ -31,17 +31,17 @@ public class IndividualProjectApplication implements CommandLineRunner {
    *
    * @param args A {@code String[]} of any potential runtime args
    */
+  @Override
   public void run(String[] args) {
     for (String arg : args) {
-      if (arg.equals("setup")) {
+      String expectedArg = "setup";
+      if (arg.equals(expectedArg)) {
         myFileDatabase = new MyFileDatabase(1, "./data.txt");
         resetDataFile();
-        System.out.println("System Setup");
         return;
       }
     }
     myFileDatabase = new MyFileDatabase(0, "./data.txt");
-    System.out.println("Start up");
   }
 
   /**
