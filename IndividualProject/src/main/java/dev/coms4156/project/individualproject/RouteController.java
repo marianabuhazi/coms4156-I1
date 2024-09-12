@@ -321,7 +321,7 @@ public class RouteController {
 
         Department specifiedDept = departmentMapping.get(deptCode);
         specifiedDept.addPersonToMajor();
-        return new ResponseEntity<>("Attribute was updated successfully", HttpStatus.OK);
+        return new ResponseEntity<>(attrUpdateSuccessful, HttpStatus.OK);
       }
       return new ResponseEntity<>(departmentNotFound, HttpStatus.NOT_FOUND);
     } catch (Exception e) {

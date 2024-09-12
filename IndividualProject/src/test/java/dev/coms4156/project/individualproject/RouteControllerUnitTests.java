@@ -188,7 +188,7 @@ public class RouteControllerUnitTests {
   void addMajorToDepartmentComs() throws Exception {
     this.mockMvc.perform(patch("/addMajorToDept").param("deptCode", "COMS"))
       .andExpect(status().isOk())
-        .andExpect(content().string(equalTo("Attribute was updated successfully")));
+        .andExpect(content().string(equalTo("Attribute was updated successfully.")));
   }
 
   @Test
